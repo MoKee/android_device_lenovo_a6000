@@ -178,6 +178,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.qualcomm.bluetooth.pbap=true \
     ro.qualcomm.bt.hci_transport=smd
 
+# Doze mode
+PRODUCT_PACKAGES += \
+    YUDoze
+
 # GPS
 PRODUCT_PACKAGES += \
     gps.msm8916
