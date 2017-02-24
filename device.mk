@@ -228,12 +228,8 @@ PRODUCT_PACKAGES += \
     libOmxQcelp13Enc \
     libOmxVdec \
     libOmxVenc \
-    libstagefrighthw
-
-ifneq ($(QCPATH),)
-PRODUCT_PACKAGES += \
+    libstagefrighthw \
     libOmxVdecHevc
-endif
 
 # Media
 PRODUCT_COPY_FILES += \
