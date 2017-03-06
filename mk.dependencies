@@ -1,0 +1,14 @@
+[
+  {
+    "repository": "android_vendor_lenovo_a6000",
+    "target_path": "vendor/lenovo/a6000"
+  },
+  {
+    "repository": "android_device_qcom_common",
+    "target_path": "device/qcom/common"
+  },
+  {
+    "repository": "android_kernel_wingtech_wt86518",
+    "target_path": "kernel/wingtech/wt86518"
+  }
+]

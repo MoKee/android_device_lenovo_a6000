@@ -16,10 +16,10 @@
 
 $(call inherit-product, device/lenovo/a6000/full_a6000.mk)
 
-# Inherit some common LineageOS stuff.
-$(call inherit-product, vendor/cm/config/common_full_phone.mk)
+# Inherit some common MK stuff.
+$(call inherit-product, vendor/mk/config/common_full_phone.mk)
 
-PRODUCT_NAME := lineage_a6000
+PRODUCT_NAME := mk_a6000
 BOARD_VENDOR := Lenovo
 
 PRODUCT_GMS_CLIENTID_BASE := android-lenovo
