@@ -12,8 +12,8 @@
     "target_path": "device/qcom/common"
   },
   {
-    "repository": "android_kernel_lenovo_msm8916",
-    "target_path": "kernel/lenovo/msm8916"
+    "repository": "android_kernel_lenovo_a6000",
+    "target_path": "kernel/lenovo/a6000"
   },
   {
     "repository": "android_external_stlport",
