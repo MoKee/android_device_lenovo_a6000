@@ -20,11 +20,7 @@ $(call inherit-product, device/lenovo/msm8916-common/msm8916.mk)
 # Overlay
 DEVICE_PACKAGE_OVERLAYS += \
     $(LOCAL_PATH)/overlay \
-    $(LOCAL_PATH)/overlay-lineage
-
-# Enforced RRO targets
-PRODUCT_ENFORCE_RRO_TARGETS := \
-    framework-res
+    $(LOCAL_PATH)/overlay-mokee
 
 # Include package config fragments
 include $(LOCAL_PATH)/product/*.mk
