@@ -1127,14 +1127,14 @@ void QCamera2HardwareInterface::video_stream_cb_routine(mm_camera_super_buf_t *s
        CDBG_HIGH("[KPI Perf] %s : PROFILE_FIRST_RECORD_FRAME", __func__);
        pme->m_bRecordStarted = false ;
     }
-    CDBG("%s: Stream(%d), Timestamp: %ld %ld",
+    ALOGD("%s: Stream(%d), Timestamp: %ld %ld",
           __func__,
           frame->stream_id,
           frame->ts.tv_sec,
           frame->ts.tv_nsec);
     nsecs_t timeStamp;
     timeStamp = nsecs_t(frame->ts.tv_sec) * 1000000000LL + frame->ts.tv_nsec;
-    CDBG("Send Video frame to services/encoder TimeStamp : %lld", timeStamp);
+    ALOGD("Send Video frame to services/encoder TimeStamp : %lld", timeStamp);
     QCameraMemory *videoMemObj = (QCameraMemory *)frame->mem_info;
     camera_memory_t *video_mem = NULL;
     if (NULL != videoMemObj) {
@@ -1509,12 +1509,24 @@ void QCamera2HardwareInterface::metadata_stream_cb_routine(mm_camera_super_buf_t
                 ALOGE("%s: processEvt focus failed", __func__);
                 free(payload);
                 payload = NULL;
-
+        } else if (pMetaData->focus_data.focus_state == CAM_AF_SCANNING) {
+	   pme->mLastAFScanTime = systemTime();
             }
         } else {
             ALOGE("%s: No memory for focus qcamera_sm_internal_evt_payload_t", __func__);
         }
-    }
+        } else if (pme->m_currentFocusState == CAM_AF_SCANNING) {
+          /* Recover if passive AF has stalled after photo capture */
+        if (pme->mLastAFScanTime && pme->mLastCaptureTime) {
+              nsecs_t now = systemTime();
+              nsecs_t scanDelta = now - pme->mLastAFScanTime;
+              nsecs_t captureDelta = now - pme->mLastCaptureTime;
+	      if (captureDelta < ms2ns(1000) && scanDelta > ms2ns(200)) {
+	      pme->sendEvtNotify(CAMERA_MSG_FOCUS_MOVE, false, 0);
+     	      pme->mLastAFScanTime = 0;
+	}
+	}
+   }
 
     if (pMetaData->is_crop_valid) {
         if (pMetaData->crop_data.num_of_streams > MAX_NUM_STREAMS) {
